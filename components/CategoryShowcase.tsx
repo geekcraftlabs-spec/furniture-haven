@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import { portfolioCategories, PortfolioCategory } from "@/lib/portfolio-data";
 import TiltCard from "./TiltCard";
 
@@ -20,7 +19,7 @@ export default function CategoryShowcase() {
     }
   );
 
-  // Auto-rotate every 5 seconds (was 3 seconds)
+  // Auto-rotate every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndexes((prev) => {
@@ -34,7 +33,7 @@ export default function CategoryShowcase() {
         });
         return next;
       });
-    }, 5000); // Changed from 3000 to 5000
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -44,6 +43,7 @@ export default function CategoryShowcase() {
     return allImages[idx % allImages.length];
   };
 
+  // Use CSS transitions for better mobile performance
   return (
     <div className="grid grid-cols-2 gap-3 md:gap-4">
       {featuredCategories.map((category: PortfolioCategory) => {
@@ -55,26 +55,18 @@ export default function CategoryShowcase() {
             className="block"
           >
             <TiltCard glowColor="#d4b896">
-              <div className="relative aspect-square rounded-xl overflow-hidden bg-[#4a3520]/80 backdrop-blur-sm border border-white/20 shadow-lg group">
-                {/* AnimatePresence for smooth crossfade */}
-                <AnimatePresence mode="wait">
-                  <motion.div
+              <div className="relative aspect-square rounded-xl overflow-hidden bg-[#4a3520]/80 backdrop-blur-sm border border-white/20 shadow-lg group will-change-transform">
+                <div className="relative w-full h-full">
+                  <Image
                     key={imageName}
-                    className="absolute inset-0"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
-                  >
-                    <Image
-                      src={`/images/${imageName}`}
-                      alt={category.name}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                    />
-                  </motion.div>
-                </AnimatePresence>
+                    src={`/images/${imageName}`}
+                    alt={category.name}
+                    fill
+                    className="object-cover transition-opacity duration-700 ease-in-out group-hover:scale-105"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                    priority={false}
+                  />
+                </div>
                 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-3 right-3">
