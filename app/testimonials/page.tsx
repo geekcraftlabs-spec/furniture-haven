@@ -4,7 +4,6 @@ import Image from "next/image";
 import { FaWhatsapp, FaPlay } from "react-icons/fa";
 import { deliveryReviews, ReviewItem } from "@/lib/review-data";
 
-// Clean base URL – remove any trailing slash
 const rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://furniturehaven.co.za";
 const baseUrl = rawBaseUrl.replace(/\/+$/, "");
 
@@ -39,7 +38,6 @@ export default function TestimonialsPage() {
           See real delivery photos and videos from our happy clients.
         </p>
 
-        {/* Tab Navigation */}
         <div className="flex justify-center gap-4 mb-8 flex-wrap">
           <button
             onClick={() => setActiveTab("delivery")}
@@ -63,7 +61,6 @@ export default function TestimonialsPage() {
           </button>
         </div>
 
-        {/* Delivery Reviews Tab */}
         {activeTab === "delivery" && (
           <div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -99,7 +96,6 @@ export default function TestimonialsPage() {
               ))}
             </div>
 
-            {/* CTA to order on WhatsApp */}
             <div className="text-center mt-8">
               <a
                 href={`https://wa.me/27684858415?text=${encodeURIComponent(
@@ -116,7 +112,6 @@ export default function TestimonialsPage() {
           </div>
         )}
 
-        {/* TrustPilot Reviews Tab */}
         {activeTab === "trustpilot" && (
           <div className="text-center py-12">
             <div className="max-w-2xl mx-auto">
@@ -158,7 +153,6 @@ export default function TestimonialsPage() {
               ×
             </button>
 
-            {/* Media */}
             <div className="relative w-full aspect-[4/3] bg-[#f0e8e0] rounded-lg overflow-hidden">
               {selectedReview.video && isPlaying ? (
                 <video
@@ -202,7 +196,6 @@ export default function TestimonialsPage() {
               )}
             </div>
 
-            {/* Info */}
             <div className="p-4">
               <h3 className="font-serif text-xl font-bold text-[#4a3520]">{selectedReview.title}</h3>
               <p className="text-[#6b4c3b] mt-1">{selectedReview.caption}</p>
@@ -214,8 +207,9 @@ export default function TestimonialsPage() {
                 </span>
               </div>
 
-              {/* WhatsApp Enquiry with clean URL */}
+              {/* WhatsApp Enquiry – FIXED URL */}
               {(() => {
+                // ✅ CORRECT: Use /review/ not /api/review/
                 const reviewUrl = `${baseUrl}/review/${selectedReview.code}`;
                 return (
                   <a

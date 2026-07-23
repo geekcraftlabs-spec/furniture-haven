@@ -40,7 +40,6 @@ export default function TiltCard({
     setPosition({ x: 0, y: 0 });
   };
 
-  // Use the passed maxTilt, but cap at 4 for touch devices
   const tiltAngle = isTouchDevice ? Math.min(maxTilt * 0.2, 3) : maxTilt;
 
   return (

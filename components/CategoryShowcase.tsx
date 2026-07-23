@@ -52,6 +52,8 @@ export default function CategoryShowcase() {
       {featuredCategories.map((category: PortfolioCategory, index: number) => {
         const imageName = getCurrentImage(category);
         const isFirst = index === 0;
+        // Unique key to force re-render of image container
+        const imageKey = `${category.slug}-${imageName}`;
         return (
           <Link
             key={category.slug}
@@ -60,8 +62,12 @@ export default function CategoryShowcase() {
           >
             <TiltCard glowColor="#d4b896" maxTilt={isMobile ? 4 : 12}>
               <div className="relative aspect-square rounded-xl overflow-hidden bg-[#4a3520]/80 shadow-lg group will-change-transform">
-                {/* Image container with CSS transition for crossfade */}
-                <div className="absolute inset-0 transition-opacity duration-700 ease-in-out">
+                {/* Image with CSS crossfade */}
+                <div
+                  key={imageKey}
+                  className="absolute inset-0 transition-opacity duration-700 ease-in-out"
+                  style={{ opacity: 1 }}
+                >
                   <Image
                     src={`/images/${imageName}`}
                     alt={category.name}
@@ -72,7 +78,6 @@ export default function CategoryShowcase() {
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                   />
                 </div>
-                {/* Overlay gradient - only on desktop to save GPU */}
                 {!isMobile && (
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 )}
