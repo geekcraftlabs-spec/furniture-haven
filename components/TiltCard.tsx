@@ -19,7 +19,6 @@ export default function TiltCard({
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
-  // Detect touch device once on client, without useEffect
   const [isTouchDevice] = useState(() => {
     if (typeof window === "undefined") return false;
     return "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -41,7 +40,8 @@ export default function TiltCard({
     setPosition({ x: 0, y: 0 });
   };
 
-  const tiltAngle = isTouchDevice ? Math.min(maxTilt * 0.3, 4) : maxTilt;
+  // Use the passed maxTilt, but cap at 4 for touch devices
+  const tiltAngle = isTouchDevice ? Math.min(maxTilt * 0.2, 3) : maxTilt;
 
   return (
     <motion.div
@@ -55,7 +55,7 @@ export default function TiltCard({
         rotateY: isHovering ? position.x * tiltAngle : 0,
       }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
-      style={{ transformStyle: "preserve-3d" }}
+      style={{ transformStyle: "preserve-3d", willChange: "transform" }}
     >
       {isHovering && !isTouchDevice && (
         <motion.div
