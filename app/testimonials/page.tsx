@@ -29,7 +29,6 @@ export default function TestimonialsPage() {
   return (
     <div className="pt-20">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-12">
-        {/* Header */}
         <h1 className="font-serif text-4xl md:text-5xl font-bold text-[#4a3520] text-center mb-4">
           What Our Customers Say
         </h1>
@@ -38,7 +37,6 @@ export default function TestimonialsPage() {
           See real delivery photos and videos from our happy clients.
         </p>
 
-        {/* Tab Navigation */}
         <div className="flex justify-center gap-4 mb-8 flex-wrap">
           <button
             onClick={() => setActiveTab("delivery")}
@@ -62,44 +60,41 @@ export default function TestimonialsPage() {
           </button>
         </div>
 
-        {/* Delivery Reviews Tab */}
         {activeTab === "delivery" && (
           <div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {deliveryReviews.map((review) => {
-                return (
-                  <div
-                    key={review.id}
-                    className="bg-white rounded-2xl overflow-hidden shadow-md border border-[#d4b896]/20 cursor-pointer group hover:shadow-xl transition"
-                    onClick={() => openModal(review)}
-                  >
-                    <div className="relative aspect-square bg-[#f0e8e0]">
-                      <Image
-                        src={`/images/${review.image}`}
-                        alt={review.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition duration-300"
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      />
-                      {review.video && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition">
-                          <div className="w-12 h-12 bg-[#8b6914] rounded-full flex items-center justify-center">
-                            <FaPlay className="text-white text-sm ml-1" />
-                          </div>
+              {deliveryReviews.map((review) => (
+                <div
+                  key={review.id}
+                  className="bg-white rounded-2xl overflow-hidden shadow-md border border-[#d4b896]/20 cursor-pointer group hover:shadow-xl transition"
+                  onClick={() => openModal(review)}
+                >
+                  <div className="relative aspect-square bg-[#f0e8e0]">
+                    <Image
+                      src={`/images/${review.image}`}
+                      alt={review.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition duration-300"
+                      loading="lazy"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    />
+                    {review.video && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition">
+                        <div className="w-12 h-12 bg-[#8b6914] rounded-full flex items-center justify-center">
+                          <FaPlay className="text-white text-sm ml-1" />
                         </div>
-                      )}
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-[#4a3520] text-sm truncate">{review.title}</h3>
-                      <p className="text-xs text-[#6b4c3b] mt-1">{review.location}</p>
-                      <p className="text-xs text-[#8b6914] mt-0.5">{review.date}</p>
-                    </div>
+                      </div>
+                    )}
                   </div>
-                );
-              })}
+                  <div className="p-4">
+                    <h3 className="font-semibold text-[#4a3520] text-sm truncate">{review.title}</h3>
+                    <p className="text-xs text-[#6b4c3b] mt-1">{review.location}</p>
+                    <p className="text-xs text-[#8b6914] mt-0.5">{review.date}</p>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {/* View All Reviews CTA */}
             <div className="text-center mt-8">
               <a
                 href={`https://wa.me/27684858415?text=${encodeURIComponent(
@@ -116,7 +111,6 @@ export default function TestimonialsPage() {
           </div>
         )}
 
-        {/* TrustPilot Reviews Tab */}
         {activeTab === "trustpilot" && (
           <div className="text-center py-12">
             <div className="max-w-2xl mx-auto">
@@ -141,7 +135,6 @@ export default function TestimonialsPage() {
         )}
       </div>
 
-      {/* Review Modal */}
       {selectedReview && (
         <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4" onClick={closeModal}>
           <div className="relative max-w-4xl w-full bg-white rounded-2xl p-4 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
@@ -152,7 +145,6 @@ export default function TestimonialsPage() {
               ×
             </button>
 
-            {/* Media */}
             <div className="relative w-full aspect-[4/3] bg-[#f0e8e0] rounded-lg overflow-hidden">
               {selectedReview.video && isPlaying ? (
                 <video
@@ -172,6 +164,7 @@ export default function TestimonialsPage() {
                     alt={selectedReview.title}
                     fill
                     className="object-contain"
+                    loading="eager"
                     sizes="(max-width: 768px) 100vw, 80vw"
                   />
                   <button
@@ -189,12 +182,12 @@ export default function TestimonialsPage() {
                   alt={selectedReview.title}
                   fill
                   className="object-contain"
+                  loading="eager"
                   sizes="(max-width: 768px) 100vw, 80vw"
                 />
               )}
             </div>
 
-            {/* Info */}
             <div className="p-4">
               <h3 className="font-serif text-xl font-bold text-[#4a3520]">{selectedReview.title}</h3>
               <p className="text-[#6b4c3b] mt-1">{selectedReview.caption}</p>
@@ -204,9 +197,10 @@ export default function TestimonialsPage() {
                 <span className="bg-[#f0e8e0] px-2 py-0.5 rounded-full text-[#8b6914]">{selectedReview.category}</span>
               </div>
 
-              {/* WhatsApp Enquiry with Preview Link */}
               {(() => {
-                const reviewUrl = `${baseUrl}/review/${selectedReview.code}`;
+                // Fix: Remove double slash
+                const cleanBaseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
+                const reviewUrl = `${cleanBaseUrl}/review/${selectedReview.code}`;
                 return (
                   <a
                     href={`https://wa.me/27684858415?text=${encodeURIComponent(

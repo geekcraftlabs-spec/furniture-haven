@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import TiltCard from "@/components/TiltCard";
@@ -7,8 +7,12 @@ import CategoryShowcase from "@/components/CategoryShowcase";
 import DeliveryTracker from "@/components/DeliveryTracker";
 
 export default function HomePage() {
-  // Fix: check client-side without useEffect to avoid ESLint warning
-  const [isClient] = useState(() => typeof window !== "undefined");
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsClient(true);
+  }, []);
 
   const trustBadges = [
     { icon: "🪚", label: "Custom Made", desc: "Designed for your space" },
@@ -36,7 +40,7 @@ export default function HomePage() {
     },
   ];
 
-  // Show a loading placeholder on the server to avoid hydration mismatches
+  // Show nothing on server to avoid hydration mismatch
   if (!isClient) {
     return (
       <div className="pt-16 md:pt-20 min-h-screen flex items-center justify-center">
@@ -65,12 +69,12 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.span
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }}
               className="inline-block bg-[#d4b896]/20 backdrop-blur-sm text-[#d4b896] text-sm font-semibold px-4 py-1.5 rounded-full mb-4"
             >
               🪵 Handcrafted in Johannesburg
@@ -79,7 +83,7 @@ export default function HomePage() {
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.4, duration: 0.7, ease: "easeOut" }}
               className="font-serif text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight mb-4"
             >
               Furniture That
@@ -90,7 +94,7 @@ export default function HomePage() {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.5, duration: 0.7, ease: "easeOut" }}
               className="text-white/80 text-lg max-w-lg mb-8"
             >
               At Furniture Haven, we create custom furniture that transforms houses
@@ -101,7 +105,7 @@ export default function HomePage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
+              transition={{ delay: 0.6, duration: 0.7, ease: "easeOut" }}
               className="flex flex-wrap gap-4"
             >
               <Link
@@ -121,7 +125,7 @@ export default function HomePage() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
+              transition={{ delay: 0.8, duration: 0.5, ease: "easeOut" }}
               className="flex flex-wrap items-center gap-6 mt-6 text-sm text-white/60"
             >
               <span>✅ Custom Designs</span>
@@ -132,9 +136,9 @@ export default function HomePage() {
 
           {/* Right: Category Showcase */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
+            transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
             className="relative"
           >
             <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-4 md:p-6 border border-white/20 shadow-2xl">
@@ -155,8 +159,8 @@ export default function HomePage() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.2 }}
           className="text-center mb-8"
         >
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a3520]">
@@ -171,8 +175,8 @@ export default function HomePage() {
               key={item.label}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              viewport={{ once: true }}
+              transition={{ delay: index * 0.08, duration: 0.5, ease: "easeOut" }}
+              viewport={{ once: true, amount: 0.2 }}
               className="snap-start shrink-0"
             >
               <TiltCard glowColor="#8b6914">
@@ -192,8 +196,8 @@ export default function HomePage() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.2 }}
           className="text-center mb-8"
         >
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a3520]">
@@ -212,8 +216,8 @@ export default function HomePage() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.2 }}
           className="text-center mb-12"
         >
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a3520]">
@@ -228,8 +232,8 @@ export default function HomePage() {
               key={feature.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.15, duration: 0.5 }}
-              viewport={{ once: true }}
+              transition={{ delay: index * 0.12, duration: 0.5, ease: "easeOut" }}
+              viewport={{ once: true, amount: 0.2 }}
             >
               <TiltCard glowColor="#d4b896">
                 <div className="bg-white/60 backdrop-blur-md rounded-2xl p-8 text-center border border-white/30 shadow-xl h-full">
@@ -250,8 +254,8 @@ export default function HomePage() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.2 }}
           className="text-center mb-8"
         >
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a3520]">
@@ -261,12 +265,11 @@ export default function HomePage() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Left: Pay on Delivery */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.2 }}
           >
             <TiltCard glowColor="#d4b896">
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/30 shadow-xl h-full">
@@ -297,12 +300,11 @@ export default function HomePage() {
             </TiltCard>
           </motion.div>
 
-          {/* Right: Deposits for Large Projects */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.2 }}
           >
             <TiltCard glowColor="#c87a3a">
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/30 shadow-xl h-full">
@@ -362,8 +364,8 @@ export default function HomePage() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.2 }}
           className="text-center mb-8"
         >
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a3520]">
@@ -377,8 +379,8 @@ export default function HomePage() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.2 }}
         >
           <TiltCard glowColor="#d4b896">
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/30 shadow-xl">
@@ -452,8 +454,8 @@ export default function HomePage() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.2 }}
           className="relative overflow-hidden rounded-3xl p-8 md:p-12 text-center text-white"
           style={{
             background: "linear-gradient(135deg, #4a3520 0%, #8b6914 50%, #c87a3a 100%)",
@@ -466,7 +468,7 @@ export default function HomePage() {
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.15, duration: 0.5, ease: "easeOut" }}
               className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4"
             >
               Have a Vision? <br className="md:hidden" />
@@ -476,7 +478,7 @@ export default function HomePage() {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.25, duration: 0.5, ease: "easeOut" }}
               className="text-white/80 max-w-2xl mx-auto mb-6"
             >
               From concept to creation – we&apos;ll craft furniture that&apos;s uniquely
@@ -486,7 +488,7 @@ export default function HomePage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.35, duration: 0.5, ease: "easeOut" }}
             >
               <Link
                 href="/contact"

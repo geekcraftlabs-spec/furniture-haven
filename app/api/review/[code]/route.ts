@@ -7,7 +7,6 @@ export async function GET(
 ) {
   const { code } = await params;
 
-  // Search for the review by code
   const foundReview = deliveryReviews.find((review) => review.code === code);
 
   if (!foundReview) {

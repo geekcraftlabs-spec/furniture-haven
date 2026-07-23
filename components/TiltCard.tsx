@@ -6,26 +6,42 @@ interface TiltCardProps {
   children: React.ReactNode;
   className?: string;
   glowColor?: string;
+  maxTilt?: number;
 }
 
-export default function TiltCard({ children, className = "", glowColor = "#d4b896" }: TiltCardProps) {
+export default function TiltCard({
+  children,
+  className = "",
+  glowColor = "#d4b896",
+  maxTilt = 12,
+}: TiltCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
+  // Detect touch device once on client, without useEffect
+  const [isTouchDevice] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  });
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
+    if (!ref.current || isTouchDevice) return;
     const rect = ref.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     setPosition({ x, y });
   };
 
-  const handleMouseEnter = () => setIsHovering(true);
+  const handleMouseEnter = () => {
+    if (!isTouchDevice) setIsHovering(true);
+  };
   const handleMouseLeave = () => {
     setIsHovering(false);
     setPosition({ x: 0, y: 0 });
   };
+
+  const tiltAngle = isTouchDevice ? Math.min(maxTilt * 0.3, 4) : maxTilt;
 
   return (
     <motion.div
@@ -35,16 +51,13 @@ export default function TiltCard({ children, className = "", glowColor = "#d4b89
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       animate={{
-        rotateX: isHovering ? -position.y * 12 : 0,
-        rotateY: isHovering ? position.x * 12 : 0,
+        rotateX: isHovering ? -position.y * tiltAngle : 0,
+        rotateY: isHovering ? position.x * tiltAngle : 0,
       }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
-      style={{
-        transformStyle: "preserve-3d",
-      }}
+      style={{ transformStyle: "preserve-3d" }}
     >
-      {/* Glow effect on hover */}
-      {isHovering && (
+      {isHovering && !isTouchDevice && (
         <motion.div
           className="absolute -inset-4 rounded-3xl opacity-50 blur-2xl pointer-events-none"
           animate={{

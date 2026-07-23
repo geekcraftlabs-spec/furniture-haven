@@ -2,10 +2,10 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { portfolioCategories, PortfolioCategory } from "@/lib/portfolio-data";
 import TiltCard from "./TiltCard";
 
-// Pick the first 6 categories
 const featuredCategories = portfolioCategories.slice(0, 6);
 
 export default function CategoryShowcase() {
@@ -19,7 +19,6 @@ export default function CategoryShowcase() {
     }
   );
 
-  // Auto-rotate every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndexes((prev) => {
@@ -43,11 +42,13 @@ export default function CategoryShowcase() {
     return allImages[idx % allImages.length];
   };
 
-  // Use CSS transitions for better mobile performance
+  // Get first category for eager loading
+
   return (
     <div className="grid grid-cols-2 gap-3 md:gap-4">
-      {featuredCategories.map((category: PortfolioCategory) => {
+      {featuredCategories.map((category: PortfolioCategory, index: number) => {
         const imageName = getCurrentImage(category);
+        const isFirst = index === 0;
         return (
           <Link
             key={category.slug}
@@ -55,18 +56,27 @@ export default function CategoryShowcase() {
             className="block"
           >
             <TiltCard glowColor="#d4b896">
-              <div className="relative aspect-square rounded-xl overflow-hidden bg-[#4a3520]/80 backdrop-blur-sm border border-white/20 shadow-lg group will-change-transform">
-                <div className="relative w-full h-full">
-                  <Image
+              <div className="relative aspect-square rounded-xl overflow-hidden bg-[#4a3520]/80 backdrop-blur-sm border border-white/20 shadow-lg group">
+                <AnimatePresence mode="wait">
+                  <motion.div
                     key={imageName}
-                    src={`/images/${imageName}`}
-                    alt={category.name}
-                    fill
-                    className="object-cover transition-opacity duration-700 ease-in-out group-hover:scale-105"
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                    priority={false}
-                  />
-                </div>
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                  >
+                    <Image
+                      src={`/images/${imageName}`}
+                      alt={category.name}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      loading={isFirst ? "eager" : "lazy"}
+                      priority={isFirst}
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                    />
+                  </motion.div>
+                </AnimatePresence>
                 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-3 right-3">

@@ -11,7 +11,6 @@ interface Props {
   }>;
 }
 
-// Dynamically generate metadata for WhatsApp preview
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params;
 
@@ -64,7 +63,6 @@ export default async function ReviewPreviewPage({ params }: Props) {
   return (
     <div className="pt-24 pb-16 max-w-4xl mx-auto px-4 md:px-6">
       <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-[#d4b896]/20">
-        {/* Review Image */}
         <div className="relative w-full aspect-[4/3] bg-[#f0e8e0]">
           <Image
             src={`/images/${foundReview.image}`}
@@ -72,11 +70,11 @@ export default async function ReviewPreviewPage({ params }: Props) {
             fill
             className="object-contain"
             priority
+            loading="eager"
             sizes="(max-width: 768px) 100vw, 80vw"
           />
         </div>
 
-        {/* Review Info */}
         <div className="p-6 md:p-8">
           <div className="flex items-start justify-between mb-4">
             <div>
@@ -91,13 +89,11 @@ export default async function ReviewPreviewPage({ params }: Props) {
           </div>
 
           <p className="text-[#6b4c3b] mb-4">{foundReview.caption}</p>
-
           <div className="flex flex-wrap gap-4 text-sm text-[#6b4c3b] mb-6">
             <span>📍 {foundReview.location}</span>
             <span>📅 {foundReview.date}</span>
           </div>
 
-          {/* WhatsApp Button for Seller */}
           <a
             href={`https://wa.me/27684858415?text=${encodeURIComponent(
               `Hi! I'm following up on the delivery review enquiry for ${foundReview.code} (${foundReview.title}).`
