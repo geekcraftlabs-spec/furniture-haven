@@ -9,6 +9,7 @@ import TiltCard from "./TiltCard";
 const featuredCategories = portfolioCategories.slice(0, 6);
 
 export default function CategoryShowcase() {
+  const [isMobile, setIsMobile] = useState(false);
   const [currentIndexes, setCurrentIndexes] = useState<Record<string, number>>(
     () => {
       const init: Record<string, number> = {};
@@ -20,6 +21,17 @@ export default function CategoryShowcase() {
   );
 
   useEffect(() => {
+    // Detect mobile screen width (or touch device) for performance
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    // Longer interval on mobile for better performance
     const interval = setInterval(() => {
       setCurrentIndexes((prev) => {
         const next = { ...prev };
@@ -32,9 +44,9 @@ export default function CategoryShowcase() {
         });
         return next;
       });
-    }, 5000);
+    }, isMobile ? 6000 : 5000); // Slower on mobile
     return () => clearInterval(interval);
-  }, []);
+  }, [isMobile]);
 
   const getCurrentImage = (category: PortfolioCategory) => {
     const idx = currentIndexes[category.slug] || 0;
@@ -42,7 +54,6 @@ export default function CategoryShowcase() {
     return allImages[idx % allImages.length];
   };
 
-  // Get first category for eager loading
 
   return (
     <div className="grid grid-cols-2 gap-3 md:gap-4">
@@ -56,7 +67,7 @@ export default function CategoryShowcase() {
             className="block"
           >
             <TiltCard glowColor="#d4b896">
-              <div className="relative aspect-square rounded-xl overflow-hidden bg-[#4a3520]/80 backdrop-blur-sm border border-white/20 shadow-lg group">
+              <div className="relative aspect-square rounded-xl overflow-hidden bg-[#4a3520]/80 backdrop-blur-sm border border-white/20 shadow-lg group will-change-transform">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={imageName}
@@ -64,7 +75,11 @@ export default function CategoryShowcase() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    transition={{ 
+                      duration: isMobile ? 0.6 : 0.8, 
+                      ease: "easeInOut" 
+                    }}
+                    style={{ willChange: 'opacity' }}
                   >
                     <Image
                       src={`/images/${imageName}`}
