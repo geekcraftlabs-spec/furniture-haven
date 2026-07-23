@@ -7,11 +7,17 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Close menu when clicking outside
+  // Close when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -23,7 +29,7 @@ export default function Navbar() {
     };
   }, []);
 
-  // Prevent body scroll when menu is open
+  // Lock body scroll when menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -64,6 +70,7 @@ export default function Navbar() {
             <span className="text-xl font-serif font-bold text-[#4a3520]">Furniture Haven</span>
           </Link>
 
+          {/* Desktop menu */}
           <div className="hidden md:flex items-center gap-6 text-sm font-medium ml-auto">
             {links.map((link) => (
               <Link
@@ -80,8 +87,9 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile toggle button */}
           <button
+            ref={buttonRef}
             onClick={toggleMenu}
             className="md:hidden w-11 h-11 flex flex-col justify-center items-center gap-1.5 cursor-pointer touch-manipulation"
             aria-label="Toggle menu"
@@ -106,12 +114,13 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile menu overlay – solid background, no backdrop blur */}
       <div
         ref={menuRef}
-        className={`md:hidden fixed inset-0 top-16 bg-[#faf6f0] transition-all duration-300 ${
+        className={`md:hidden fixed inset-0 top-16 bg-[#faf6f0] transition-opacity duration-300 ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
+        style={{ zIndex: 40 }}
       >
         <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-2">
           {links.map((link) => (
