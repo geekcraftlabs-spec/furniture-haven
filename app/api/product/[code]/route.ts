@@ -3,9 +3,9 @@ import { portfolioCategories } from "@/lib/portfolio-data";
 
 export async function GET(
   request: Request,
-  { params }: { params: { code: string } }
+  { params }: { params: Promise<{ code: string }> }
 ) {
-  const code = params.code;
+  const { code } = await params;
 
   // Search for the product by code
   let foundProduct = null;
