@@ -27,6 +27,29 @@ export const metadata: Metadata = {
       },
     ],
   },
+  // Open Graph for social preview (WhatsApp, Facebook, etc.)
+  openGraph: {
+    title: "Furniture Haven – Handcrafted Furniture in South Africa",
+    description: "Premium custom furniture handcrafted in Johannesburg. Nationwide delivery, bespoke designs, and a promise you can trust.",
+    url: "https://furniturehaven.co.za",
+    siteName: "Furniture Haven",
+    locale: "en_ZA",
+    type: "website",
+    images: [
+      {
+        url: "https://furniturehaven.co.za/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Furniture Haven – Premium Custom Furniture",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Furniture Haven – Handcrafted Furniture in South Africa",
+    description: "Premium custom furniture handcrafted in Johannesburg. Nationwide delivery, bespoke designs, and a promise you can trust.",
+    images: ["https://furniturehaven.co.za/images/og-image.png"],
+  },
 };
 
 export const viewport: Viewport = {

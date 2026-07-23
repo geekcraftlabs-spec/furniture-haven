@@ -225,6 +225,14 @@ export default function TestimonialsPage() {
                   </a>
                 );
               })()}
+
+              {/* Close Button */}
+<button
+  onClick={closeModal}
+  className="mt-3 w-full bg-gray-200 text-[#4a3520] py-3 px-4 rounded-xl font-semibold hover:bg-gray-300 transition shadow-md"
+>
+  Close
+</button>
             </div>
           </div>
         </div>
