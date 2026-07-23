@@ -1,0 +1,165 @@
+/* postcss */
+@import "tailwindcss";
+
+@layer base {
+  /* Use Inter as the default sans-serif font */
+  body {
+    font-family: var(--font-inter), sans-serif;
+  }
+
+  /* Serif headings – use DM Serif Display */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-dm-serif), serif;
+  }
+}
+
+@layer utilities {
+  /* Utility classes for consistent styling */
+  .heading-serif {
+    font-family: var(--font-dm-serif), serif;
+  }
+
+  .heading-serif-lg {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #4a3520;
+  }
+
+  .heading-serif-sm {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #4a3520;
+  }
+
+  .text-body {
+    color: #6b4c3b;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .text-body-sm {
+    color: #6b4c3b;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .card-warm {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(212, 184, 150, 0.2);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .card-warm:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .btn-wood {
+    background-color: #8b6914;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-wood:hover {
+    background-color: #6b4c1e;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Responsive utilities for heading sizes */
+  @media (min-width: 768px) {
+    .heading-serif-lg {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .heading-serif-lg {
+      font-size: 3.75rem;
+    }
+
+    .heading-serif-sm {
+      font-size: 1.875rem;
+    }
+
+    .text-body {
+      font-size: 1.125rem;
+    }
+
+    .text-body-sm {
+      font-size: 1rem;
+    }
+  }
+}
+/* Custom animations for premium feel */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes bounce-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 4s ease-in-out infinite;
+}
+
+.delay-500 {
+  animation-delay: 500ms;
+}
+
+.delay-700 {
+  animation-delay: 700ms;
+}
+
+.delay-1000 {
+  animation-delay: 1000ms;
+}
+
+/* Smooth scroll for horizontal badge scroll */
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #f0e8e0;
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #d4b896;
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #8b6914;
+}
+
+/* Snap scrolling for badges */
+.snap-x {
+  scroll-snap-type: x proximity;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
