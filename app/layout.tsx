@@ -30,7 +30,8 @@ export const metadata: Metadata = {
   // Open Graph for social preview (WhatsApp, Facebook, etc.)
   openGraph: {
     title: "Furniture Haven – Handcrafted Furniture in South Africa",
-    description: "Premium custom furniture handcrafted in Johannesburg. Nationwide delivery, bespoke designs, and a promise you can trust.",
+    description:
+      "Premium custom furniture handcrafted in Johannesburg. Nationwide delivery, bespoke designs, and a promise you can trust.",
     url: "https://furniturehaven.co.za",
     siteName: "Furniture Haven",
     locale: "en_ZA",
@@ -47,8 +48,15 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Furniture Haven – Handcrafted Furniture in South Africa",
-    description: "Premium custom furniture handcrafted in Johannesburg. Nationwide delivery, bespoke designs, and a promise you can trust.",
+    description:
+      "Premium custom furniture handcrafted in Johannesburg. Nationwide delivery, bespoke designs, and a promise you can trust.",
     images: ["https://furniturehaven.co.za/images/og-image.png"],
+  },
+
+  // ✅ TRUSTPILOT DOMAIN VERIFICATION – add this block
+  other: {
+    "trustpilot-one-time-domain-verification-id":
+      "ca225c2f-b270-4c4a-a641-dcc0ba7790ec",
   },
 };
 
