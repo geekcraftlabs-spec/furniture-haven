@@ -114,13 +114,18 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu overlay – solid background, no backdrop blur */}
+      {/* Mobile menu overlay – SOLID background, no blur, fully opaque */}
       <div
         ref={menuRef}
-        className={`md:hidden fixed inset-0 top-16 bg-[#faf6f0] transition-opacity duration-300 ${
+        className={`md:hidden fixed inset-0 top-16 transition-opacity duration-300 ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
-        style={{ zIndex: 40 }}
+        style={{
+          backgroundColor: "#faf6f0",
+          zIndex: 40,
+          WebkitBackdropFilter: "none",
+          backdropFilter: "none",
+        }}
       >
         <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-2">
           {links.map((link) => (
